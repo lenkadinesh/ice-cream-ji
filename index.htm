@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Ice cream ji!</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: linear-gradient(45deg, #ff9a9e, #fecfef, #feada6, #f3a0ff);
+            background-size: 400% 400%;
+            animation: gradientShift 12s ease infinite;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow-x: hidden;
+            color: #4a4a4a;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.88);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            border: 2px solid #fff;
+            max-width: 90%;
+            width: 500px;
+            animation: popIn 1s ease-out;
+            position: relative;
+            z-index: 2;
+        }
+        h1 {
+            color: #d81b60;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            animation: bounce 2s infinite;
+        }
+        .name {
+            color: #e91e63;
+            font-size: 3rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .wishes {
+            font-style: italic;
+            color: #c2185b;
+        }
+        .btn {
+            background-color: #e91e63;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.4);
+        }
+        .btn:hover {
+            background-color: #c2185b;
+            transform: scale(1.05);
+        }
+        
+        /* Modal Window styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-content {
+            background: #fff;
+            padding: 25px;
+            border-radius: 20px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+            transform: scale(0.7);
+            transition: transform 0.4s ease;
+            border: 4px solid #fecfef;
+        }
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+        .birthday-img {
+            width: 100%;
+            max-height: 420px;
+            object-fit: contain;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .extra-wishes {
+            font-size: 1.15rem;
+            color: #d81b60;
+            font-weight: 600;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .close-btn {
+            background: #4a4a4a;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .close-btn:hover {
+            background: #222;
+        }
+
+        footer {
+            margin-top: 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #880e4f;
+            z-index: 2;
+        }
+        
+        /* Interactive Animation Elements */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            animation: confettiFall 4s linear infinite;
+            top: -10px;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .balloon {
+            position: fixed;
+            width: 40px;
+            height: 50px;
+            animation: balloonFloat 5s ease-in infinite;
+            bottom: -70px;
+            z-index: 5;
+            pointer-events: none;
+        }
+        .balloon::after {
+            content: "🎈";
+            position: absolute;
+            font-size: 45px;
+            top: 0;
+            left: 0;
+        }
+
+        /* Keyframes */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes confettiFall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+        @keyframes balloonFloat {
+            0% { transform: translateY(0) translateX(0); opacity: 1; }
+            50% { transform: translateY(-50vh) translateX(30px); }
+            100% { transform: translateY(-110vh) translateX(-30px); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hidden Background Audio Player -->
+    <audio id="birthdayMusic" loop>
+        <source src="https://mixkit.co" type="audio/mpeg">
+    </audio>
+
+    <div class="card">
+        <h1>Happy Birthday</h1>
+        <span class="name">Ice cream ji! 🍦</span>
+        <p class="wishes">May your day be filled with sweet moments, endless smiles, and all the joy your heart can hold. Have a spectacular year ahead! pandi🐷🪼</p>
+        <button class="btn" onclick="celebrate()">Click for Surprise 🎉</button>
+    </div>
+
+    <!-- Surprise Popup Window Layout -->
+    <div id="surpriseModal" class="modal">
+        <div class="modal-content">
+            <!-- Image URL updated completely -->
+            <img src="https://i.postimg.cc/FR2CjxDd/ice-cream.png" alt="Ice cream ji" class="birthday-img">
+            <p class="extra-wishes">🍦 Dear Ice cream ji, your presence adds sweetness to everyone's life just like your name! Wishing you a brilliant day filled with laughter, great surprises, and success in everything you chase. Stay wonderful! ✨</p>
+            <button class="close-btn" onclick="closeModal()">Close 🌸</button>
+        </div>
+    </div>
+
+    <footer>Created with ❤️ by Jai Babu</footer>
+
+    <script>
+        let balloonInterval;
+
+        function celebrate() {
+            // Play Background Sound
+            const music = document.getElementById('birthdayMusic');
+            music.play().catch(error => console.log("Audio play blocked by browser permission policy:", error));
+
+            // Trigger Confetti Storm Elements
+            for (let i = 0; i < 80; i++) {
+                createConfetti();
+            }
+            
+            // Continuous heavy balloon generation loop to fully pack layout screen space
+            generateMassBalloons();
+            balloonInterval = setInterval(createBalloon, 120);
+            
+            // Launch main animation pop window panel
+            const modal = document.getElementById('surpriseModal');
+            modal.classList.add('show');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('surpriseModal');
+            modal.classList.remove('show');
+            
+            // Terminate background floating asset generators
+            clearInterval(balloonInterval);
+            
+            // Kill audio playback channel loop
+            const music = document.getElementById('birthdayMusic');
+            music.pause();
+        }
+
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            
+            const colors = ['#ff65a3', '#ff9a9e', '#fecfef', '#fff', '#ff4081'];
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.width = Math.random() * 8 + 5 + 'px';
+            confetti.style.height = confetti.style.width;
+            
+            document.body.appendChild(confetti);
+            
+            setTimeout(() => {
+                confetti.remove();
+            }, 4000);
+        }
+
+        function generateMassBalloons() {
+            for (let k = 0; k < 45; k++) {
+                setTimeout(createBalloon, Math.random() * 2000);
+            }
+        }
+
+        function createBalloon() {
+            const balloon = document.createElement('div');
+            balloon.classList.add('balloon');
+            balloon.style.left = Math.random() * 95 + 'vw';
+            balloon.style.animationDuration = (Math.random() * 3 + 3) + 's'; 
+            
+            document.body.appendChild(balloon);
+            
+            setTimeout(() => {
+                balloon.remove();
+            }, 6000);
+        }
+    </script>
+</body>
+</html>
